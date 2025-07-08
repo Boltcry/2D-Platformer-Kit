@@ -15,6 +15,10 @@ public class InputManager : MonoBehaviour
 
     string actionMapName;
     public Vector2 moveDirection {get; private set;}
+    public bool jumpWasPressed {get; private set;}
+    public bool jumpIsHeld {get; private set;}
+    public bool jumpWasReleased {get; private set;}
+    public bool runIsHeld {get; private set;}
     
     // input select cooldown
     private bool selectCooldownActive = false;
@@ -32,7 +36,6 @@ public class InputManager : MonoBehaviour
     public static void RegisterSelf()
     {
         Instance.playerInput = Instance.gameObject.GetComponent<PlayerInput>();
-        //Instance.playerTopDown = FindObjectOfType<PlayerTopDown>();
         Instance.actionMapName = Instance.playerInput.currentActionMap.name;
     }
 
@@ -43,7 +46,6 @@ public class InputManager : MonoBehaviour
         if (actionMapName == "Player")
         {
             moveDirection = aContext.ReadValue<Vector2>();
-            //playerTopDown?.Move(moveDirection);
         }
 
         if(actionMapName == "UI")
@@ -56,23 +58,53 @@ public class InputManager : MonoBehaviour
 
     }
 
+    public void OnRun(InputAction.CallbackContext aContext)
+    {
+        if (actionMapName == "Player")
+        {
+            if (aContext.phase == InputActionPhase.Performed)
+            {
+                runIsHeld = true;
+            }
+            if (aContext.action.WasReleasedThisFrame())
+            {
+                runIsHeld = false;
+            }
+        }
+    }
+
     // When the Select action is performed
     public void OnJump(InputAction.CallbackContext aContext)
     {
+        jumpWasPressed = aContext.action.WasPressedThisFrame();
+        jumpIsHeld = aContext.action.IsPressed();
+        jumpWasReleased = aContext.action.WasReleasedThisFrame();
+
+        if (jumpWasPressed)
+        {
+            Debug.Log("jump was pressed");
+        }
+        if (jumpIsHeld)
+        {
+            Debug.Log("jump is currently held");
+        }
+        if (jumpWasReleased)
+        {
+            Debug.Log("jump was released");
+        }
 
         if (aContext.phase == InputActionPhase.Performed)
         {
+            StartCoroutine(WaitForSelectCooldown());
+            if (actionMapName == "Player")
+            {
+                if (true) // check player status
+                {
+                    //Debug.Log("OnJump pressed in Overworld mode");
+                }
+            }
             if (!selectCooldownActive)
             {
-                StartCoroutine(WaitForSelectCooldown());
-                if (actionMapName == "Player")
-                {
-                    if (playerTopDown is PlayerOverworld playerOverworld)
-                    {
-                        Debug.Log("OnJump pressed in Overworld mode");
-                    }
-                }
-
                 if (actionMapName == "UI")
                 {
                     Debug.Log("OnJump pressed in UI mode");
