@@ -82,15 +82,15 @@ public class InputManager : MonoBehaviour
 
         if (jumpWasPressed)
         {
-            Debug.Log("jump was pressed");
+            //Debug.Log("jump was pressed");
         }
         if (jumpIsHeld)
         {
-            Debug.Log("jump is currently held");
+            //Debug.Log("jump is currently held");
         }
         if (jumpWasReleased)
         {
-            Debug.Log("jump was released");
+            //Debug.Log("jump was released");
         }
 
         if (aContext.phase == InputActionPhase.Performed)
