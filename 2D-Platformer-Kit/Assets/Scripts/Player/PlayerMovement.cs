@@ -314,6 +314,68 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, verticalVelocity);
     }
 
+    private void DrawJumpArc(float moveSpeed, Color gizmoColor) // does not account for max fall speed
+    {
+        Vector2 startPosition = new Vector2(feetCollider.bounds.center.x, feetCollider.bounds.min.y);
+        Vector2 previousPosition = startPosition;
+        float speed = 0f;
+        if (moveStats.drawRight)
+        {
+            speed = moveSpeed;
+        }
+        else
+        {
+            speed = -moveSpeed;
+        }
+        Vector2 velocity = new Vector2(speed, moveStats.initialJumpVelocity);
+
+        Gizmos.color = gizmoColor;
+
+        float timeStep = 2 * moveStats.timeTillJumpApex / moveStats.arcResolution; // time step for simulation
+        //float totalTime = (2 * moveStats.timeTillJumpApex) + moveStats.apexHangTime; // total time of arc including hang time
+
+        for (int i = 0; i < moveStats.visualizationSteps; i++)
+        {
+            float simulationTime = i * timeStep;
+            Vector2 displacement;
+            Vector2 drawPoint;
+
+            if (simulationTime < moveStats.timeTillJumpApex) // Ascending
+            {
+                displacement = velocity * simulationTime + 0.5f * new Vector2(0, moveStats.gravity) * simulationTime * simulationTime;
+            }
+            else if (simulationTime < moveStats.timeTillJumpApex + moveStats.apexHangTime) // apex hang time
+            {
+                float apexTime = simulationTime - moveStats.timeTillJumpApex;
+                displacement = velocity * moveStats.timeTillJumpApex + 0.5f * new Vector2(0, moveStats.gravity) * moveStats.timeTillJumpApex * moveStats.timeTillJumpApex;
+                displacement += new Vector2(speed, 0) * apexTime; // no vertical movement during hang time
+            }
+            else // descending
+            {
+                float descendTime = simulationTime - (moveStats.timeTillJumpApex + moveStats.apexHangTime);
+                displacement = velocity * moveStats.timeTillJumpApex + 0.5f * new Vector2(0, moveStats.gravity) * moveStats.timeTillJumpApex * moveStats.timeTillJumpApex;
+                displacement += new Vector2(speed, 0) * moveStats.apexHangTime; // horizontal movement during hang time
+                displacement += new Vector2(speed, 0) * descendTime + 0.5f * new Vector2(0, moveStats.gravity * descendTime * descendTime);
+            }
+
+            drawPoint = startPosition + displacement;
+
+            if (moveStats.stopOnCollision)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(previousPosition, drawPoint - previousPosition, Vector2.Distance(previousPosition, drawPoint), moveStats.groundLayer);
+                if (hit.collider != null)
+                {
+                    // if hit detected, stop drawing the arc there
+                    Gizmos.DrawLine(previousPosition, hit.point);
+                    break;
+                }
+            }
+
+            Gizmos.DrawLine(previousPosition, drawPoint);
+            previousPosition = drawPoint;
+        }
+    }
+
     #endregion
 
     #region Collision Checks
@@ -414,4 +476,20 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion
 
+    #if UNITY_EDITOR
+
+    private void OnDrawGizmos()
+    {
+        if (moveStats.showWalkJumpArc)
+        {
+            DrawJumpArc(moveStats.maxWalkSpeed, Color.white);
+        }
+
+        if (moveStats.showRunJumpArc)
+        {
+            DrawJumpArc(moveStats.maxRunSpeed, Color.red);
+        }
+    }
+
+    #endif
 }
