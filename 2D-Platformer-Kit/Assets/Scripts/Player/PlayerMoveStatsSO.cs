@@ -12,6 +12,8 @@ public class PlayerMoveStatsSO : ScriptableObject
     [Range(0.25f, 50f)] public float groundDeceleration = 20f;
     [Range(0.25f, 50f)] public float airAcceleration = 20f;
     [Range(0.25f, 50f)] public float airDeceleration = 20f;
+    [Range(0.25f, 50f)] public float wallJumpMoveAcceleration = 5f;
+    [Range(0.25f, 50f)] public float wallJumpMoveDeceleration = 5f;
 
     [Header("Run")]
     [Range(1f, 100f)] public float maxRunSpeed = 20f;
@@ -21,6 +23,8 @@ public class PlayerMoveStatsSO : ScriptableObject
     public float groundDetectionRayLength = 0.02f;
     public float headDetectionRayLength = 0.02f;
     [Range(0f, 1f)] public float headWidth = 0.75f;
+    public float wallDetectionRayLength = 0.125f;
+    [Range(0.01f, 2f)] public float wallDetectionRayHeightMultiplier = 0.9f;
 
     [Header("Jump")]
     public float jumpHeight = 6.5f;
@@ -29,6 +33,9 @@ public class PlayerMoveStatsSO : ScriptableObject
     [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
     public float maxFallSpeed = 26f;
     [Range(1,5)] public int numJumpsAllowed = 2;
+
+    [Header("Reset Jump Options")]
+    public bool resetJumpOnWallSlide = true;
 
     [Header("Jump Cut")]
     [Range(0.02f, 0.3f)] public float timeForUpwardsCancel = 0.027f;
@@ -43,9 +50,19 @@ public class PlayerMoveStatsSO : ScriptableObject
     [Header("Jump Coyote Time")]
     [Range(0f, 1f)] public float jumpCoyoteTime = 0.1f;
 
+    [Header("Wall Slide")]
+    [Min(0.01f)] public float wallSlideSpeed = 5f;
+    [Range(0.25f, 50f)] public float wallSlideDecelerationSpeed = 50f;
+
+    [Header("Wall Jump")]
+    public Vector2 wallJumpDirection = new Vector2(-20f, 6.5f);
+    [Range(0f, 1f)] public float wallJumpPostBufferTime = 0.125f;
+    [Range(0.01f, 5f)] public float wallJumpGravityOnReleaseMultiplier = 1f;
+
     [Header("Debug")]
     public bool debugShowIsGroundedBox = false;
     public bool debugShowHeadBumpBox = false;
+    public bool debugShowWallHitbox = false;
 
     [Header("JumpVisualization Tool")]
     public bool showWalkJumpArc = false;
@@ -55,9 +72,16 @@ public class PlayerMoveStatsSO : ScriptableObject
     [Range(5, 100)] public int arcResolution = 20;
     [Range(0, 500)] public int visualizationSteps = 90;
 
+
+    // Jump
     public float gravity {get; private set;}
     public float initialJumpVelocity {get; private set;}
     public float adjustedJumpHeight {get; private set;}
+
+    // Wall Jump
+    public float wallJumpGravity {get; private set;}
+    public float initialWallJumpVelocity {get; private set;}
+    public float adjustedWallJumpHeight {get; private set;}
 
     private void OnValidate()
     {
@@ -71,8 +95,14 @@ public class PlayerMoveStatsSO : ScriptableObject
 
     private void CalculateValues()
     {
+        // Jump
         adjustedJumpHeight = jumpHeight * jumpHeightCompensationFactor;
         gravity = -(2f * adjustedJumpHeight) / Mathf.Pow(timeTillJumpApex, 2f);
         initialJumpVelocity = Mathf.Abs(gravity) * timeTillJumpApex;
+
+        // Wall Jump
+        adjustedWallJumpHeight = wallJumpDirection.y * jumpHeightCompensationFactor;
+        wallJumpGravity = -(2f * adjustedWallJumpHeight) / Mathf.Pow(timeTillJumpApex, 2f);
+        initialWallJumpVelocity = Mathf.Abs(wallJumpGravity) * timeTillJumpApex;
     }
 }

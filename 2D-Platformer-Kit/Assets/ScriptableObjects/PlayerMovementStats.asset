@@ -17,6 +17,8 @@ MonoBehaviour:
   groundDeceleration: 22.3
   airAcceleration: 50
   airDeceleration: 3.9
+  wallJumpMoveAcceleration: 3.6
+  wallJumpMoveDeceleration: 15.2
   maxRunSpeed: 20
   groundLayer:
     serializedVersion: 2
@@ -24,19 +26,28 @@ MonoBehaviour:
   groundDetectionRayLength: 0.02
   headDetectionRayLength: 0.02
   headWidth: 0.75
+  wallDetectionRayLength: 0.125
+  wallDetectionRayHeightMultiplier: 0.9
   jumpHeight: 4.69
   jumpHeightCompensationFactor: 1.0095
   timeTillJumpApex: 0.32
   gravityOnReleaseMultiplier: 3
   maxFallSpeed: 26
   numJumpsAllowed: 2
+  resetJumpOnWallSlide: 1
   timeForUpwardsCancel: 0.023
   apexThreshold: 0.711
   apexHangTime: 0.03
   jumpBufferTime: 0.009
   jumpCoyoteTime: 0.1
+  wallSlideSpeed: 5.5
+  wallSlideDecelerationSpeed: 50
+  wallJumpDirection: {x: -15, y: 5}
+  wallJumpPostBufferTime: 0.116
+  wallJumpGravityOnReleaseMultiplier: 1.58
   debugShowIsGroundedBox: 1
   debugShowHeadBumpBox: 1
+  debugShowWallHitbox: 1
   showWalkJumpArc: 1
   showRunJumpArc: 1
   stopOnCollision: 1
