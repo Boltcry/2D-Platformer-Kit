@@ -2620,8 +2620,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1946320526}
   - component: {fileID: 1946320527}
-  - component: {fileID: 1946320528}
   - component: {fileID: 1946320529}
+  - component: {fileID: 1946320530}
+  - component: {fileID: 1946320531}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2667,21 +2668,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1946320528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946320525}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832c410605b71c64aa64d2cbc3f176bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveStats: {fileID: 11400000, guid: 58605f405c7fe1345869a6d993499bed, type: 2}
-  bodyCollider: {fileID: 1507818234}
-  feetCollider: {fileID: 24099896}
 --- !u!114 &1946320529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2695,6 +2681,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveStats: {fileID: 11400000, guid: 58605f405c7fe1345869a6d993499bed, type: 2}
+--- !u!95 &1946320530
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946320525}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1946320531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946320525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eab74e0b7e44b347a4f1bc5b3672abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionStats: {fileID: 11400000, guid: 92674f47e5779204aaa131ad96092f57, type: 2}
+  bodyCollider: {fileID: 1507818234}
+  feetCollider: {fileID: 24099896}
 --- !u!1 &1993424361
 GameObject:
   m_ObjectHideFlags: 0

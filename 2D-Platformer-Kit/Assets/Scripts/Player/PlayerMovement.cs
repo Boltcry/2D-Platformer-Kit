@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script copied while following tutorial (in README)
+// Was attempting to adapt it into the PlayerController state machine
 public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]

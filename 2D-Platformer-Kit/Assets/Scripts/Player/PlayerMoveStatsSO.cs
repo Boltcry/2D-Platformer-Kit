@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script copied while following tutorial (in README)
 // Contains base stats
 [CreateAssetMenu(fileName = "NewPlayerMoveStats", menuName = "ScriptableObjects/Stats/PlayerMoveStats")]
 public class PlayerMoveStatsSO : ScriptableObject

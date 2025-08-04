@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// checks every frame if an entity is grounded, is touching a wall, or has bumped its head
+// checks every frame if an Entity is grounded, is touching a wall, or has bumped its head
 // should be attached to the root component of the entity
 [RequireComponent(typeof(Entity))]
 public class CollisionChecker : MonoBehaviour

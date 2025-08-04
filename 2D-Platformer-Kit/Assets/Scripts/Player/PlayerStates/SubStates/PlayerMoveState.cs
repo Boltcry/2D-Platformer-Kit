@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Active when the player is grounded and moving above a certain velocity
 public class PlayerMoveState : PlayerGroundedState
 {
     private float idleThreshold = 0.1f;     // if horizontal velocity is lower than this value change to idle state

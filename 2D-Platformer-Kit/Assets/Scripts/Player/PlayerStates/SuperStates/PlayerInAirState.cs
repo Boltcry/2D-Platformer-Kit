@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Not actually used in the State Machine but used as a parent for Falling & Jumping states
 public class PlayerInAirState : PlayerState
 {
     public PlayerInAirState(PlayerController aPlayer, PlayerStateMachine aStateMachine, PlayerMoveStatsSO aMoveStats, string aBoolName) : 
@@ -30,7 +31,7 @@ public class PlayerInAirState : PlayerState
         }
         if (player.collisionChecker.isTouchingWall)
         {
-            // stateMachine.ChangeState(stateMachine.wallSlideState);
+            // stateMachine.ChangeState(stateMachine.wallSlideState); // wall slide state planned but not created
         }
 
         if (ShouldJump())

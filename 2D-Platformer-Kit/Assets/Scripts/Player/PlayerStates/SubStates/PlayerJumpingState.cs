@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // handles jumps while ascending, then changes state to PlayerFallingState for descending gravity
+// Also handles wall jumps (planned)
 public class PlayerJumpingState : PlayerInAirState
 {
     private bool isWallJumping = false;
@@ -23,7 +24,7 @@ public class PlayerJumpingState : PlayerInAirState
         base.Enter();
 
         // reset jump timer
-        player.numJumpsUsed ++;
+        player.IncrementNumJumps(1);
         player.SetVerticalVelocity(moveStats.initialJumpVelocity);
     }
 
@@ -46,14 +47,14 @@ public class PlayerJumpingState : PlayerInAirState
             if (isPastApexThreshold)
             {
                 isPastApexThreshold = false;
-                // stateMachine.Fall(true);
-                // fastFallTime = moveStats.timeForUpwardsCancel;
+                stateMachine.Fall(true);
+                // fastFallTime = moveStats.timeForUpwardsCancel; // copied from PlayerMovement
                 // player.SetVerticalVelocity(0f);
             }
             else
             {
-                // stateMachine.Fall(true);
-                // fastFallReleaseSpeed = player.verticalVelocity;
+                stateMachine.Fall(true);
+                // fastFallReleaseSpeed = player.verticalVelocity; // copied from PlayerMovement
             }
         }
     }
@@ -63,7 +64,7 @@ public class PlayerJumpingState : PlayerInAirState
         base.PhysicsUpdate();
 
         // APEX CONTROLS
-        apexPoint = Mathf.InverseLerp(moveStats.initialJumpVelocity, 0f, verticalVelocity);
+        apexPoint = Mathf.InverseLerp(moveStats.initialJumpVelocity, 0f, player.verticalVelocity);
 
         if (apexPoint > moveStats.apexThreshold)
         {
@@ -96,8 +97,6 @@ public class PlayerJumpingState : PlayerInAirState
                 isPastApexThreshold = false;
             }
         }
-
-
     }
 
     // set by playerStateMachine on Jump()

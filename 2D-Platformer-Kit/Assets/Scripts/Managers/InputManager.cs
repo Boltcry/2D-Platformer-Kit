@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 
-// Manages input & switches between menu and overworld modes
+// Records input data via UnityEvents from the new input system
 public class InputManager : MonoBehaviour
 {
 
@@ -70,21 +70,5 @@ public class InputManager : MonoBehaviour
         {
             Debug.Log("OnEscape() called");
         }
-    }
-
-    // Switch to Overworld input mode
-    public static void SwitchInputModeOverworld()
-    {
-        Instance.playerInput.SwitchCurrentActionMap("Player");
-        Instance.actionMapName = Instance.playerInput.currentActionMap.name;
-        Debug.Log("Switched action map to Player (overworld)");
-    }
-
-    // Switch to Menu UI input mode
-    public static void SwitchInputModeMenu()
-    {
-        Instance.playerInput.SwitchCurrentActionMap("UI");
-        Instance.actionMapName = Instance.playerInput.currentActionMap.name;
-        Debug.Log("Switched action map to UI");
     }
 }

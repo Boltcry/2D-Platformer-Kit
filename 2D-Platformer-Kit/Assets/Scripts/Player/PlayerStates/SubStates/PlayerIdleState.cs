@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Active when the player is grounded and not moving
 public class PlayerIdleState : PlayerGroundedState
 {
     public PlayerIdleState(PlayerController aPlayer, PlayerStateMachine aStateMachine, PlayerMoveStatsSO aMoveStats, string aBoolName) : 
@@ -26,7 +27,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        if (input.x != 0f)
+        if (InputManager.Instance.moveDirection.x != 0f)
         {
             stateMachine.ChangeState(stateMachine.moveState);
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Active when player is descending
 public class PlayerFallingState : PlayerInAirState
 {
     bool isFastFalling = false;

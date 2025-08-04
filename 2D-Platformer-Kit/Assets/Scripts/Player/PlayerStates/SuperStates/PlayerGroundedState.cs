@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Not actually used in the State Machine but used as a parent for Idle & Move states
 public class PlayerGroundedState : PlayerState
 {
 

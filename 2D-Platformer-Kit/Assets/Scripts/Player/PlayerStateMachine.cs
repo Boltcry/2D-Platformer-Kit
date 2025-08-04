@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Contains references to and manages transitions of PlayerStates.
 public class PlayerStateMachine
 {
     public PlayerController player {get; private set;}
@@ -10,7 +11,7 @@ public class PlayerStateMachine
     // STATE REFERENCES
     public PlayerIdleState idleState {get; private set;}
     public PlayerMoveState moveState {get; private set;}
-    public PlayerFallingState fallinState {get; private set;}
+    public PlayerFallingState fallingState {get; private set;}
     public PlayerJumpingState jumpingState {get; private set;}
 
     public void Initialize(PlayerController aPlayer)
@@ -35,6 +36,7 @@ public class PlayerStateMachine
         currentState.Enter();
     }
 
+    // Changes state, but allows for the setting of an initial variable that changes math slightly
     public void Jump(bool isWallJumping)
     {
         ChangeState(jumpingState);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// For use with CollisionChecker
 [CreateAssetMenu(fileName = "NewCollisionStats", menuName = "ScriptableObjects/Stats/CollisionStats")]
 public class CollisionStatsSO : ScriptableObject
 {

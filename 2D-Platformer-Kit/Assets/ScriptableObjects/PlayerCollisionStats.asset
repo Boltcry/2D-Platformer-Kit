@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   groundDetectionRayLength: 0.02
   headDetectionRayLength: 0.02
   headWidth: 0.75
   wallDetectionRayLength: 0.125
   wallDetectionRayHeightMultiplier: 0.9
-  debugShowIsGroundedBox: 0
-  debugShowHeadBumpBox: 0
-  debugShowWallHitbox: 0
+  debugShowIsGroundedBox: 1
+  debugShowHeadBumpBox: 1
+  debugShowWallHitbox: 1

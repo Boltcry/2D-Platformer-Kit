@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// WIP implementation of a Player State Machine, handles general variables that should be accessible by all player states
 public class PlayerController : Entity
 {
     public PlayerStateMachine stateMachine {get; private set;}
@@ -22,6 +23,9 @@ public class PlayerController : Entity
 
     // JUMP
     public int numJumpsUsed {get; private set;}
+    // jump buffer
+    public float jumpBufferTimer {get; private set;}
+    public bool jumpReleasedDuringBuffer {get; private set;}
     
     private void Awake()
     {
@@ -97,6 +101,11 @@ public class PlayerController : Entity
     public void SetVerticalVelocity(float aVelocity)
     {
         verticalVelocity = aVelocity;
+    }
+
+    public void IncrementNumJumps(int aNumJumps)
+    {
+        numJumpsUsed += aNumJumps;
     }
 
     // UTILITY METHODS
